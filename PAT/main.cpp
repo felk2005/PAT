@@ -41,12 +41,22 @@ int main(int argc, const char * argv[]) {
     {
         nodes = m[0][0];
         edges = m[0][1];
-        
-        for (int i = 0; i < nodes; ++i)
+        if (edges > 0)
         {
-            
-        }
         
+            UndirectedGraph<int> graph;
+            
+            for (int i = 0; i < edges; ++i)
+            {
+                int from = m[i + 1][0];
+                int to = m[i + 1][1];
+                graph.AddNode(from);
+                graph.AddNode(to);
+                graph.LinkNode(from, to);
+            }
+            NodePrintOperationConst<int> op;
+            graph.DFSTraverseConst(op);
+        }
         
     }
     

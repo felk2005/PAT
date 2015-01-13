@@ -59,20 +59,24 @@ public:
 template <typename T> class UndirectedGraph
 {
 private:
-    typedef std::map<T, UndirectedGraph*> NodeMap;
-    typedef typename NodeMap::iterator NodeMapIter;
+    typedef std::map<T, UndirectedGraphNode<T>*> NodeMap;
+    typedef typename std::map<T, UndirectedGraphNode<T>*>::iterator NodeMapIter;
 
 private:
-    std::map<T, UndirectedGraph*> nodeMap;
+    NodeMap nodeMap;
 
 public:
-    void AddNode(T value)
+    UndirectedGraphNode<T>* AddNode(T value)
     {
         NodeMapIter it = nodeMap.find(value);
-        if (it != nodeMap.end())
+        if (it == nodeMap.end())
         {
-            nodeMap[value] = new UndirectedGraphNode<T>(value);
+            UndirectedGraphNode<T>* newNode = new UndirectedGraphNode<T>(value);
+            nodeMap[value] = newNode;
+            return newNode;
         }
+        return it->second;
+        
     }
     
     const UndirectedGraphNode<T>* GetNode(T value) const
@@ -80,7 +84,7 @@ public:
         NodeMapIter it = nodeMap.find(value);
         if (it != nodeMap.end())
         {
-            return *it;
+            return it->second;
         }
         return NULL;
     }
@@ -97,17 +101,31 @@ public:
         
         if (fromNode != nodeMap.end() && toNode != nodeMap.end())
         {
-            (*fromNode)->AddNeighbour(*toNode);
-            (*toNode)->AddNeighbour(*fromNode);
+            fromNode->second->AddNeighbour(toNode->second);
+            toNode->second->AddNeighbour(fromNode->second);
         }
     }
     
-    void DFSTraverseConst(NodeOperationConst<T> op) const
+    void LinkNode(UndirectedGraphNode<T>* from, UndirectedGraphNode<T>* to)
     {
+        if (from != NULL && to != NULL)
+        {
+            from->AddNeighbour(to);
+            to->AddNeighbour(from);
+        }
+    }
+    
+    void DFSTraverseConst(NodeOperationConst<T>& op)
+    {
+        
+        for (NodeMapIter iter = nodeMap.begin(); iter != nodeMap.end(); ++iter)
+        {
+            op.Action(iter->second);
+        }
         
     }
     
-    void BFSTraverseConst(NodeOperationConst<T> op) const
+    void BFSTraverseConst(NodeOperationConst<T>& op)
     {
         
     }
