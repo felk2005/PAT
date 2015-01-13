@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		AC615A311A64B93900002451 /* PAT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PAT; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC615A341A64B93900002451 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AC615A3E1A64BE9800002451 /* PATHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PATHelper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				AC615A341A64B93900002451 /* main.cpp */,
+				AC615A3E1A64BE9800002451 /* PATHelper.h */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
@@ -232,6 +234,7 @@
 				AC615A3A1A64B93900002451 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
