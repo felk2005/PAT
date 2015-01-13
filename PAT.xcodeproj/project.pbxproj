@@ -27,6 +27,7 @@
 		AC615A341A64B93900002451 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AC615A3E1A64BE9800002451 /* PATHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PATHelper.h; sourceTree = "<group>"; };
 		AC615A3F1A64F97300002451 /* TestCase.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCase.txt; sourceTree = "<group>"; };
+		AC615A401A64FBD300002451 /* UndirectedGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndirectedGraph.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +63,7 @@
 			children = (
 				AC615A341A64B93900002451 /* main.cpp */,
 				AC615A3E1A64BE9800002451 /* PATHelper.h */,
+				AC615A401A64FBD300002451 /* UndirectedGraph.h */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
