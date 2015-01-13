@@ -26,6 +26,7 @@
 		AC615A311A64B93900002451 /* PAT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PAT; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC615A341A64B93900002451 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AC615A3E1A64BE9800002451 /* PATHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PATHelper.h; sourceTree = "<group>"; };
+		AC615A3F1A64F97300002451 /* TestCase.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCase.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 		AC615A281A64B93900002451 = {
 			isa = PBXGroup;
 			children = (
+				AC615A3F1A64F97300002451 /* TestCase.txt */,
 				AC615A331A64B93900002451 /* PAT */,
 				AC615A321A64B93900002451 /* Products */,
 			);
