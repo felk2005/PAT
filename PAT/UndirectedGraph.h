@@ -8,6 +8,7 @@
 
 #ifndef PAT_Graph_h
 #define PAT_Graph_h
+#include <algorithm>
 #include <vector>
 #include <map>
 #include <set>
@@ -25,9 +26,18 @@ public:
         value = inValue;
     }
     
+    T GetValue() const
+    {
+        return value;
+    }
+    
+    struct SortCompare {
+        bool operator() (UndirectedGraphNode* i,UndirectedGraphNode* j) { return (i->GetValue()<j->GetValue());}
+    } sortCompare;
     void AddNeighbour(UndirectedGraphNode* node)
     {
         neighbours.push_back(node);
+        std::sort(neighbours.begin(), neighbours.end(), sortCompare);
     }
     bool RemoveNeighbour(UndirectedGraphNode* node)
     {
@@ -35,11 +45,7 @@ public:
         if(it != neighbours.end())
             neighbours.erase(it);
     }
-    
-    T GetValue() const
-    {
-        return value;
-    }
+
     
     const std::vector<UndirectedGraphNode*> GetNeighbours() const
     {
