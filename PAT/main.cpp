@@ -13,19 +13,15 @@
 #include "PATHelper.h"
 #include "UndirectedGraph.h"
 
+#define MAX_INT 0xFFFFFF
+
 template <typename T> class NodePrintOperationConst : public NodeOperationConst<T>
 {
 public:
     virtual ~NodePrintOperationConst() {}
-    virtual void Action(UndirectedGraphNode<T>* node)
+    virtual void Action(const UndirectedGraphNode<T>* node) const
     {
-        std::cout << "{ " << node->GetValue();
-        const std::vector<UndirectedGraphNode<T>*> neighbours = node->GetNeighbours();
-        for (int i = 0; i < neighbours.size(); ++i)
-        {
-            std::cout << ' ' << neighbours[i]->GetValue();
-        }
-        std::cout << " }" << std::endl;
+        std::cout << " " << node->GetValue();
         
     }
 };
@@ -45,30 +41,29 @@ int main(int argc, const char * argv[]) {
         {
         
             UndirectedGraph<int> graph;
+            int minNodeValue = MAX_INT;
             
             for (int i = 0; i < edges; ++i)
             {
                 int from = m[i + 1][0];
                 int to = m[i + 1][1];
+                if (from < minNodeValue)
+                    minNodeValue = from;
+                if (to < minNodeValue)
+                    minNodeValue = to;
+                
                 graph.AddNode(from);
                 graph.AddNode(to);
                 graph.LinkNode(from, to);
             }
             NodePrintOperationConst<int> op;
-            graph.DFSTraverseConst(op);
+            const UndirectedGraphNode<int>* minNode = graph.GetNode(minNodeValue);
+            graph.DFSTraverseConst(op, minNode);
+            graph.BFSTraverseConst(op, minNode);
         }
         
     }
     
-//    // for test print
-//    for (int i = 0; i < m.size(); ++i)
-//    {
-//        std::vector<int>& row = m[i];
-//        for (int j = 0; j < row.size(); ++j)
-//        {
-//            std::cout << row[j] << "\t";
-//        }
-//        std::cout << std::endl;
-//    }
+
     return 0;
 }

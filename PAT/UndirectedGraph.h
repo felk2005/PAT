@@ -10,6 +10,9 @@
 #define PAT_Graph_h
 #include <vector>
 #include <map>
+#include <set>
+#include <list>
+#include <queue>
 
 template <typename T> class UndirectedGraphNode
 {
@@ -33,7 +36,7 @@ public:
             neighbours.erase(it);
     }
     
-    T GetValue()
+    T GetValue() const
     {
         return value;
     }
@@ -52,7 +55,7 @@ template <typename T> class NodeOperationConst
 {
 public:
     virtual ~NodeOperationConst() {}
-    virtual void Action(UndirectedGraphNode<T>* node) = 0;
+    virtual void Action(const UndirectedGraphNode<T>* node) const= 0;
 };
 
 
@@ -61,9 +64,12 @@ template <typename T> class UndirectedGraph
 private:
     typedef std::map<T, UndirectedGraphNode<T>*> NodeMap;
     typedef typename std::map<T, UndirectedGraphNode<T>*>::iterator NodeMapIter;
+    typedef typename std::map<T, UndirectedGraphNode<T>*>::const_iterator NodeMapIterConst;
 
 private:
     NodeMap nodeMap;
+    std::set<T> traversingKey;
+    
 
 public:
     UndirectedGraphNode<T>* AddNode(T value)
@@ -81,7 +87,7 @@ public:
     
     const UndirectedGraphNode<T>* GetNode(T value) const
     {
-        NodeMapIter it = nodeMap.find(value);
+        NodeMapIterConst it = nodeMap.find(value);
         if (it != nodeMap.end())
         {
             return it->second;
@@ -115,19 +121,86 @@ public:
         }
     }
     
-    void DFSTraverseConst(NodeOperationConst<T>& op)
+    void DFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* startNode)
     {
+
+        if (startNode != NULL)
+        {
+            std::cout << "{";
+            DoDFSTraverseConst(op, startNode);
+            std::cout << " }" << std::endl;
+        }
         
         for (NodeMapIter iter = nodeMap.begin(); iter != nodeMap.end(); ++iter)
         {
-            op.Action(iter->second);
+            if (traversingKey.find(iter->first) == traversingKey.end())
+            {
+                std::cout << "{";
+                DoDFSTraverseConst(op, iter->second);
+                std::cout << " }" << std::endl;
+            }
         }
+        traversingKey.clear();
         
     }
     
-    void BFSTraverseConst(NodeOperationConst<T>& op)
+    void BFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* startNode)
     {
+        if (startNode != NULL)
+        {
+            std::cout << "{";
+            DoBFSTraverseConst(op, startNode);
+            std::cout << " }" << std::endl;
+        }
         
+        for (NodeMapIter iter = nodeMap.begin(); iter != nodeMap.end(); ++iter)
+        {
+            if (traversingKey.find(iter->first) == traversingKey.end())
+            {
+                std::cout << "{";
+                DoBFSTraverseConst(op, iter->second);
+                std::cout << " }" << std::endl;
+            }
+        }
+        traversingKey.clear();
+    }
+private:
+    
+    void DoDFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* node)
+    {
+        if (node != NULL && traversingKey.find(node->GetValue()) == traversingKey.end())
+        {
+            op.Action(node);
+            traversingKey.insert(node->GetValue());
+            const std::vector<UndirectedGraphNode<T>*> neighbours = node->GetNeighbours();
+            for (int i = 0; i < neighbours.size(); ++i)
+            {
+                DoDFSTraverseConst(op, neighbours[i]);
+            }
+        }
+    }
+    std::queue<const UndirectedGraphNode<T>* , std::list<const UndirectedGraphNode<T>*> > bfsQueue;
+    void DoBFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* node)
+    {
+        if (node != NULL && traversingKey.find(node->GetValue()) == traversingKey.end())
+        {
+            bfsQueue.push(node);
+            traversingKey.insert(node->GetValue());
+        }
+        while (bfsQueue.size() != 0)
+        {
+            const UndirectedGraphNode<T>* first = bfsQueue.front();
+            bfsQueue.pop();
+            op.Action(first);
+            
+            const std::vector<UndirectedGraphNode<T>*> neighbours = first->GetNeighbours();
+            for (int i = 0; i < neighbours.size(); ++i)
+            {
+                if (traversingKey.find(neighbours[i]->GetValue()) == traversingKey.end())
+                    bfsQueue.push(neighbours[i]);
+                    traversingKey.insert(neighbours[i]->GetValue());
+            }
+        }
     }
     
 };
