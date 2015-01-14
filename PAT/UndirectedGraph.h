@@ -8,12 +8,10 @@
 
 #ifndef PAT_Graph_h
 #define PAT_Graph_h
-#include <algorithm>
-#include <vector>
-#include <map>
-#include <set>
-#include <list>
-#include <queue>
+
+#ifndef IGNORE_LIB
+#include "stlheaders.h"
+#endif
 
 template <typename T> class UndirectedGraphNode
 {

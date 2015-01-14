@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 felk. All rights reserved.
 //
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
+#ifndef IGNORE_LIB
+#include "stlheaders.h"
+#endif
+
 #include "PATHelper.h"
 #include "UndirectedGraph.h"
 
@@ -24,6 +24,7 @@ public:
         std::cout << " " << node->GetValue();
         
     }
+    
 };
 
 int main(int argc, const char * argv[]) {
@@ -45,7 +46,6 @@ int main(int argc, const char * argv[]) {
         }
         if (edges > 0)
         {
-            int minNodeValue = 0;
             
             for (int i = 0; i < edges; ++i)
             {
@@ -54,11 +54,13 @@ int main(int argc, const char * argv[]) {
                 
                 graph.LinkNode(from, to);
             }
-            NodePrintOperationConst<int> op;
-            const UndirectedGraphNode<int>* minNode = graph.GetNode(minNodeValue);
-            graph.DFSTraverseConst(op, minNode);
-            graph.BFSTraverseConst(op, minNode);
         }
+        int minNodeValue = 0;
+        NodePrintOperationConst<int> op;
+        const UndirectedGraphNode<int>* minNode = graph.GetNode(minNodeValue);
+        graph.DFSTraverseConst(op, minNode);
+        graph.BFSTraverseConst(op, minNode);
+
         
     }
     

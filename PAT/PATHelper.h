@@ -9,9 +9,9 @@
 #ifndef PAT_PATHelper_h
 #define PAT_PATHelper_h
 
-#include <string>
-#include <fstream>
-#include <sstream>
+#ifndef IGNORE_LIB
+#include "stlheaders.h"
+#endif
 
 class PATHelper
 {
