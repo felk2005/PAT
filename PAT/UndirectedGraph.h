@@ -12,63 +12,32 @@
 #ifndef IGNORE_LIB
 #include "stlheaders.h"
 #endif
+#include "GraphNode.h"
 
-template <typename T> class UndirectedGraphNode
-{
-public:
-    typedef std::vector<UndirectedGraphNode* > NodeList;
-    typedef typename std::vector<UndirectedGraphNode* >::iterator NodeListIter;
-    
-    UndirectedGraphNode(T inValue)
-    {
-        value = inValue;
-    }
-    
-    T GetValue() const
-    {
-        return value;
-    }
-    
-    struct SortCompare {
-        bool operator() (UndirectedGraphNode* i,UndirectedGraphNode* j) { return (i->GetValue()<j->GetValue());}
-    } sortCompare;
-    void AddNeighbour(UndirectedGraphNode* node)
-    {
-        neighbours.push_back(node);
-        std::sort(neighbours.begin(), neighbours.end(), sortCompare);
-    }
-    bool RemoveNeighbour(UndirectedGraphNode* node)
-    {
-        NodeListIter it = std::find(neighbours.begin(), neighbours.end(), 5);
-        if(it != neighbours.end())
-            neighbours.erase(it);
-    }
-
-    
-    const std::vector<UndirectedGraphNode*> GetNeighbours() const
-    {
-        return neighbours;
-    }
-    
-private:
-    T value;
-    std::vector<UndirectedGraphNode* > neighbours;
-};
 
 template <typename T> class NodeOperationConst
 {
 public:
     virtual ~NodeOperationConst() {}
-    virtual void Action(const UndirectedGraphNode<T>* node) const= 0;
+    virtual void Action(const GraphNode<T>* node) const= 0;
 };
 
-
+template <typename T> class NodePrintOperationConst : public NodeOperationConst<T>
+{
+public:
+    virtual ~NodePrintOperationConst() {}
+    virtual void Action(const GraphNode<T>* node) const
+    {
+        std::cout << " " << node->GetValue();
+    }
+    
+};
 template <typename T> class UndirectedGraph
 {
 private:
-    typedef std::map<T, UndirectedGraphNode<T>*> NodeMap;
-    typedef typename std::map<T, UndirectedGraphNode<T>*>::iterator NodeMapIter;
-    typedef typename std::map<T, UndirectedGraphNode<T>*>::const_iterator NodeMapIterConst;
+    typedef std::map<T, GraphNode<T>*> NodeMap;
+    typedef typename std::map<T, GraphNode<T>*>::iterator NodeMapIter;
+    typedef typename std::map<T, GraphNode<T>*>::const_iterator NodeMapIterConst;
 
 private:
     NodeMap nodeMap;
@@ -76,12 +45,12 @@ private:
     
 
 public:
-    UndirectedGraphNode<T>* AddNode(T value)
+    GraphNode<T>* AddNode(T value)
     {
         NodeMapIter it = nodeMap.find(value);
         if (it == nodeMap.end())
         {
-            UndirectedGraphNode<T>* newNode = new UndirectedGraphNode<T>(value);
+            GraphNode<T>* newNode = new GraphNode<T>(value);
             nodeMap[value] = newNode;
             return newNode;
         }
@@ -89,7 +58,7 @@ public:
         
     }
     
-    const UndirectedGraphNode<T>* GetNode(T value) const
+    const GraphNode<T>* GetNode(T value) const
     {
         NodeMapIterConst it = nodeMap.find(value);
         if (it != nodeMap.end())
@@ -116,7 +85,7 @@ public:
         }
     }
     
-    void LinkNode(UndirectedGraphNode<T>* from, UndirectedGraphNode<T>* to)
+    void LinkNode(GraphNode<T>* from, GraphNode<T>* to)
     {
         if (from != NULL && to != NULL)
         {
@@ -125,7 +94,7 @@ public:
         }
     }
     
-    void DFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* startNode)
+    void DFSTraverseConst(NodeOperationConst<T>& op, const GraphNode<T>* startNode)
     {
 
         if (startNode != NULL)
@@ -148,7 +117,7 @@ public:
         
     }
     
-    void BFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* startNode)
+    void BFSTraverseConst(NodeOperationConst<T>& op, const GraphNode<T>* startNode)
     {
         if (startNode != NULL)
         {
@@ -170,21 +139,21 @@ public:
     }
 private:
     
-    void DoDFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* node)
+    void DoDFSTraverseConst(NodeOperationConst<T>& op, const GraphNode<T>* node)
     {
         if (node != NULL && traversingKey.find(node->GetValue()) == traversingKey.end())
         {
             op.Action(node);
             traversingKey.insert(node->GetValue());
-            const std::vector<UndirectedGraphNode<T>*> neighbours = node->GetNeighbours();
+            const std::vector<GraphNode<T>*> neighbours = node->GetNeighbours();
             for (int i = 0; i < neighbours.size(); ++i)
             {
                 DoDFSTraverseConst(op, neighbours[i]);
             }
         }
     }
-    std::queue<const UndirectedGraphNode<T>* , std::list<const UndirectedGraphNode<T>*> > bfsQueue;
-    void DoBFSTraverseConst(NodeOperationConst<T>& op, const UndirectedGraphNode<T>* node)
+    std::queue<const GraphNode<T>* , std::list<const GraphNode<T>*> > bfsQueue;
+    void DoBFSTraverseConst(NodeOperationConst<T>& op, const GraphNode<T>* node)
     {
         if (node != NULL && traversingKey.find(node->GetValue()) == traversingKey.end())
         {
@@ -193,11 +162,11 @@ private:
         }
         while (bfsQueue.size() != 0)
         {
-            const UndirectedGraphNode<T>* first = bfsQueue.front();
+            const GraphNode<T>* first = bfsQueue.front();
             bfsQueue.pop();
             op.Action(first);
             
-            const std::vector<UndirectedGraphNode<T>*> neighbours = first->GetNeighbours();
+            const std::vector<GraphNode<T>*> neighbours = first->GetNeighbours();
             for (int i = 0; i < neighbours.size(); ++i)
             {
                 if (traversingKey.find(neighbours[i]->GetValue()) == traversingKey.end())
