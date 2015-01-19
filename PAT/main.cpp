@@ -21,6 +21,11 @@ enum OPERATOR
     MULTIPLY,
     DIVIDE
 };// mistake 1
+enum EXCEPTIONS
+{
+    INPUT_ERROR,
+    DIVIDE_ZERO
+};
 OPERATOR getOperator(string inStr)
 {
     // mistake 2, switch not support string
@@ -42,14 +47,31 @@ OPERATOR getOperator(string inStr)
     }
     return INVALID;
 }
+
+float string2float(string str)
+{
+    float thisValue = 0;
+    stringstream ss(str);
+    ss >> thisValue;
+    return thisValue;
+}
 int main(int argc, const char * argv[]) {
-    
+    try{
     vector<string> stack;
-    istream& stream = ifstream(argv[1]);//std::cin;// use reference for stream
-    while (!stream.eof())
+//    ifstream file(argv[1]);
+    istream& stream = std::cin;// use reference for stream
+    while (stream)
     {
+//        for (int i = 0; i < stack.size(); ++i)
+//        {
+//            cout << stack[i] << "\t";
+//        }
+        
         string str;
         stream >> str;
+//        cout << (int)str[0] << "END" << endl;
+        if (str.compare("\0") == 0)   // <----------- skip end
+            break;
         OPERATOR op = getOperator(str);
         if (op != INVALID)
         {
@@ -57,21 +79,19 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
-            if (stack.size() > 1 && getOperator(stack.back()) == INVALID)
+            // FATAL ERROR: should pop in a loop
+            float thisValue = string2float(str);
+            while (stack.size() > 1 && getOperator(stack.back()) == INVALID)
             {
-                float thisValue = 0;
-                stringstream ss(str);
-                ss >> thisValue;
-                // get last number
-                ss.str(stack.back());
+                
+
+                float lastValue = string2float(stack.back());
                 stack.pop_back();
-                float lastValue = 0;
-                ss >> lastValue;
+
                 OPERATOR lastOp = getOperator(stack.back());
                 if (lastOp == INVALID)
                 {
-                    cout << "Wrong Input" << endl;
-                    return 1;
+                    throw INPUT_ERROR;
                 }
                 else
                 {
@@ -89,25 +109,32 @@ int main(int argc, const char * argv[]) {
                             result = lastValue * thisValue;	
                             break;
                         case DIVIDE:
+                            if (thisValue == 0)
+                                throw DIVIDE_ZERO;
                             result = lastValue / thisValue;
                             break;
                         default:
                             break;
                     }
-                    ss.str("");
-                    ss << result;
-                    stack.push_back(ss.str());
+                    thisValue = result;
+                    
                 }
+                
             }
-            else
-            {
-                stack.push_back(str);
-            }
+            stringstream ss;
+            ss << thisValue;
+            stack.push_back(ss.str());
         }
     }
     float rtn = 0;
     stringstream ss(stack.back());
     ss >> rtn;
-    printf ("%.2f", rtn);// string type not float
+    printf ("%.1f\n", rtn);// string type not float
     return 0;
+    }
+    catch (...)
+    {
+        cout << "ERROR" << endl;
+        return 0;
+    }
 }
