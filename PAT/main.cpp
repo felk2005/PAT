@@ -10,23 +10,40 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Solution.h"
 #include "PATHelper.h"
+
+using namespace std;
+int parseIndex(string str)
+{
+	if (str.compare("-") == 0)
+		return INVALID_INDEX;
+
+	stringstream ss(str);
+	int rtn = 0;
+	ss >> rtn;
+	return rtn;
+}
 
 int main(int argc, const char * argv[]) {
 
-    std::fstream inFile(argv[1]);
-    // for matrix input
-    std::vector< std::vector<int> > m = PATHelper::parseToMatrix<int>(inFile, ' ');
+    fstream inFile(argv[1]);
+    // Construct tree
+	istream& stream = inFile;
+
+	int count = 0;
+	stream >> count;
+	BinaryTree tree(count);
+	for (int i = 0; i < count; ++i)
+	{
+		string leftIndex;
+		string rightIndex;
+		stream >> leftIndex >> rightIndex;
+		
+		tree.AddNode(i, parseIndex(leftIndex), parseIndex(rightIndex));
+	}
+	(new Solution())->Resolve(tree);
+
     
-    // for test print
-    for (int i = 0; i < m.size(); ++i)
-    {
-        std::vector<int>& row = m[i];
-        for (int j = 0; j < row.size(); ++j)
-        {
-            std::cout << row[j] << "\t";
-        }
-        std::cout << std::endl;
-    }
     return 0;
 }
