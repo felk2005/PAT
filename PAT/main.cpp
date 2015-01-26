@@ -9,24 +9,87 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
+#include <map>
 #include <vector>
-#include "PATHelper.h"
 
-int main(int argc, const char * argv[]) {
+using namespace std;
 
-    std::fstream inFile(argv[1]);
-    // for matrix input
-    std::vector< std::vector<int> > m = PATHelper::parseToMatrix<int>(inFile, ' ');
+#define ROOT_ID "root"
+class ListNode
+{
+public:
+	string id;
+	int value;
+	string next;
+};
+int main(int argc, const char * argv[])
+{
+
+	//
+	//00100 6 4
+	//00000 4 99999
+	//00100 1 12309
+	//68237 6 -1
+	//33218 3 00000
+	//99999 5 68237
+	//12309 2 33218
+    fstream inFile(argv[1]);
+    istream& stream = inFile;
+	string root;
+	int nodeNum, reverseNum;
+	map<string, ListNode*> nodeMap;
+	stream >> root >> nodeNum >> reverseNum;
+
+	for (int i = 0; i < nodeNum; ++i)
+	{
+		ListNode* node = new ListNode();
+		stream >> node->id >> node->value >> node->next;
+		nodeMap[node->id] = node;
+	}
+
+	// add first node
+	ListNode* rootNode = new ListNode();
+	rootNode->id = ROOT_ID;
+	rootNode->value = -1;
+	rootNode->next = root;
     
-    // for test print
-    for (int i = 0; i < m.size(); ++i)
+    // reverse list
+    ListNode* node = nodeMap[rootNode->next];
+    ListNode* nextNode = nodeMap[node->next];
+    if (nextNode != NULL)
     {
-        std::vector<int>& row = m[i];
-        for (int j = 0; j < row.size(); ++j)
+        while (--reverseNum > 0)
         {
-            std::cout << row[j] << "\t";
+            ListNode* nextNextNode = nodeMap[nextNode->next];
+            nextNode->next = node->id;
+            node = nextNode;
+            nextNode = nextNextNode;
         }
-        std::cout << std::endl;
+        ListNode* oldSecondNode = nodeMap[rootNode->next];
+        if (nextNode != NULL)
+            oldSecondNode->next = nextNode->id;
+        else
+            oldSecondNode->next = "-1";
+        rootNode->next = node->id;
     }
+    
+
+    // print nodes
+	node = nodeMap[rootNode->next];
+	while (node != NULL)
+	{
+		cout << node->id << " " << node->value << " " << node->next << endl;
+		map<string, ListNode*>::iterator iter = nodeMap.find(node->next);
+		if (iter != nodeMap.end())
+		{
+			node = iter->second;
+		}
+		else
+		{
+			node = NULL;
+		}
+	}
+
     return 0;
 }
