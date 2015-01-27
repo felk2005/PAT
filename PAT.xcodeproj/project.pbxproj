@@ -23,6 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AC23643F1A769488003D7488 /* AVLTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVLTree.h; sourceTree = "<group>"; };
 		AC615A311A64B93900002451 /* PAT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PAT; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC615A341A64B93900002451 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AC615A3E1A64BE9800002451 /* PATHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PATHelper.h; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 			children = (
 				AC615A341A64B93900002451 /* main.cpp */,
 				AC615A3E1A64BE9800002451 /* PATHelper.h */,
+				AC23643F1A769488003D7488 /* AVLTree.h */,
 			);
 			path = PAT;
 			sourceTree = "<group>";

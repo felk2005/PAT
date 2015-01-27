@@ -9,24 +9,29 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
 #include <vector>
-#include "PATHelper.h"
+#include "AVLTree.h"
 
+using namespace std;
 int main(int argc, const char * argv[]) {
 
-    std::fstream inFile(argv[1]);
-    // for matrix input
-    std::vector< std::vector<int> > m = PATHelper::parseToMatrix<int>(inFile, ' ');
-    
-    // for test print
-    for (int i = 0; i < m.size(); ++i)
+    fstream inFile(argv[1]);
+    istream& stream = inFile;
+    int count = 0;
+    stream >> count;
+    AVLTree tree;
+    while (--count >= 0)
     {
-        std::vector<int>& row = m[i];
-        for (int j = 0; j < row.size(); ++j)
-        {
-            std::cout << row[j] << "\t";
-        }
-        std::cout << std::endl;
+        int v;
+        stream >> v;
+        tree.Add(v);
+        tree.PrintTree();
+        cout << endl << "=========================" << endl;
     }
+    cout << tree.GetRoot()->value << endl;
+    
+    
+    
     return 0;
 }
