@@ -1,0 +1,4 @@
+gcc -DIGNORE_LIB -E PAT/main.cpp > preprocessed.tmp
+cat PAT/stlheaders.h > main.txt
+cat preprocessed.tmp >> main.txt
+rm -f preprocessed.tmp

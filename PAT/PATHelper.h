@@ -9,22 +9,14 @@
 #ifndef PAT_PATHelper_h
 #define PAT_PATHelper_h
 
-#include <string>
-#include <fstream>
-#include <sstream>
+#ifndef IGNORE_LIB
+#include "stlheaders.h"
+#endif
 
 class PATHelper
 {
 public:
     
-//    static std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
-//        std::stringstream ss(s);
-//        std::string item;
-//        while (std::getline(ss, item, delim)) {
-//            elems.push_back(item);
-//        }
-//        return elems;
-//    }
     template <class T> static std::vector<T> &split(const std::string &s, char delim, std::vector<T> &elems) {
         std::stringstream ss(s);
         std::string item;
