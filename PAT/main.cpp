@@ -9,6 +9,7 @@
 #ifndef IGNORE_LIB
 #include "stlheaders.h"
 #endif
+#include "WeightedGraphNode.h"
 
 int main(int argc, const char * argv[]) {
     
