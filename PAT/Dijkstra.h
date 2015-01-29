@@ -63,6 +63,7 @@ public:
                 if (unknownSet.find(nodeWithWeight.first) != unknownSet.end())
                 {
                     nodeQueue.push(nodeWithWeight.first);
+                }
                     NodeInfo& neighbourInfo = nodeInfoMap[nodeWithWeight.first];
                     int newDistance = currentInfo.distance + nodeWithWeight.second;
                     if (newDistance < neighbourInfo.distance)
@@ -70,14 +71,24 @@ public:
                         neighbourInfo.distance = newDistance;
                         neighbourInfo.fromNode = node;
                     }
-                }
+                
             }
             for (int i = 0; i < graph.size(); ++i)
             {
                 NodeInfo info = nodeInfoMap[graph[i]];
-                cout << graph[i]->GetValue() << "\t" ;
+                cout << graph[i]->GetValue() + 1 << "\t" ;
                 cout << (unknownSet.find(graph[i]) == unknownSet.end() ? "TRUE" : "FALSE") << "\t\t" ;
-                cout << info.distance << "\t" << (info.fromNode == NULL ? -1 : info.fromNode->GetValue()) << endl;
+                if (info.distance == 0x7fffffff)
+                {
+                    cout << "+oo";
+                }
+                else
+                {
+                    cout << info.distance;
+                    
+                }
+                    
+                cout << "\t" << (info.fromNode == NULL ? -1 : info.fromNode->GetValue() + 1) << endl;
             }
             cout << "====================" << endl;
         }
