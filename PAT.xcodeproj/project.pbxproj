@@ -32,6 +32,7 @@
 		ACC493261A78680E00D6BFD1 /* GraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphNode.h; path = PAT/Common/GraphNode.h; sourceTree = "<group>"; };
 		ACC493271A78680E00D6BFD1 /* PATHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PATHelper.h; path = PAT/Common/PATHelper.h; sourceTree = "<group>"; };
 		ACC493281A78680E00D6BFD1 /* UndirectedGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndirectedGraph.h; path = PAT/Common/UndirectedGraph.h; sourceTree = "<group>"; };
+		ACC493291A79C24800D6BFD1 /* Dijkstra.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dijkstra.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +70,7 @@
 			children = (
 				AC615A341A64B93900002451 /* main.cpp */,
 				AC615A541A6613AD00002451 /* stlheaders.h */,
+				ACC493291A79C24800D6BFD1 /* Dijkstra.h */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
