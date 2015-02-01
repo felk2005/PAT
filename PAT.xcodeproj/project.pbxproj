@@ -28,6 +28,7 @@
 		AC615A3F1A64F97300002451 /* TestCase.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCase.txt; sourceTree = "<group>"; };
 		AC615A541A6613AD00002451 /* stlheaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stlheaders.h; sourceTree = "<group>"; };
 		AC615A551A66157E00002451 /* makeInOne */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = makeInOne; sourceTree = "<group>"; };
+		AC94DC621A7E290B007BDE29 /* Solution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Solution.h; sourceTree = "<group>"; };
 		ACC493241A7867BD00D6BFD1 /* WeightedGraphNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeightedGraphNode.h; path = PAT/Common/WeightedGraphNode.h; sourceTree = "<group>"; };
 		ACC493261A78680E00D6BFD1 /* GraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphNode.h; path = PAT/Common/GraphNode.h; sourceTree = "<group>"; };
 		ACC493271A78680E00D6BFD1 /* PATHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PATHelper.h; path = PAT/Common/PATHelper.h; sourceTree = "<group>"; };
@@ -69,6 +70,7 @@
 			children = (
 				AC615A341A64B93900002451 /* main.cpp */,
 				AC615A541A6613AD00002451 /* stlheaders.h */,
+				AC94DC621A7E290B007BDE29 /* Solution.h */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
