@@ -21,6 +21,7 @@
 #include <set>
 #include <list>
 #include <queue>
+#include <forward_list>
 
 #include <algorithm>
 #include <cmath>
