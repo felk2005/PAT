@@ -24,4 +24,5 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #endif
